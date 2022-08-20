@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
-const CheklistItem = () => {
+const GetItemIncheklist = () => {
   const { id } = useParams();
-  // getlist
+  const { iditem } = useParams();
   const [getAllItemList, setGetAllItemList] = useState();
   const token = localStorage.getItem("token");
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -13,7 +13,7 @@ const CheklistItem = () => {
       const result = await axios({
         method: "GET",
         baseURL: `http://94.74.86.174:8080/api`,
-        url: `/checklist/${id}/item`,
+        url: `/checklist/${id}/item/${iditem}`,
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -36,11 +36,11 @@ const CheklistItem = () => {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleTambah = (e) => {
+  const handleRename = (e) => {
     e.preventDefault();
     axios({
-      method: "POST",
-      url: `http://94.74.86.174:8080/api/checklist/${id}/item`,
+      method: "PUT",
+      url: `http://94.74.86.174:8080/api/checklist/${id}/item/rename/${id}`,
       data: createList,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -82,23 +82,20 @@ const CheklistItem = () => {
         <h1>cheklist</h1>
         <div>
           <input type="text" name="itemName" onChange={handleChange} />
-          <button onClick={handleTambah}>tambah</button>
+          <button onClick={handleRename}>rename</button>
         </div>
       </div>
       <div>
         <h4>Data list</h4>
+
         <div>
-          {getAllItemList?.map((item) => (
-            <div key={item.id} id={item.id}>
-              <Link to={`/cheklisitem/${id}/itembyid/${item.id}`}>{item.name}</Link>
-              <button onClick={() => deletelist(item.id)}>Delete</button>
-              <button>Edit</button>
-            </div>
-          ))}
+          {getAllItemList?.name}
+          <button>update</button>
+          <button onClick={() => deletelist(getAllItemList.id)}>delete</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default CheklistItem;
+export default GetItemIncheklist;
