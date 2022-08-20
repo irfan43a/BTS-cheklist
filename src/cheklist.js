@@ -5,6 +5,7 @@ const Cheklist = () => {
   // getlist
   const [getAllList, setGetAllList] = useState();
   const token = localStorage.getItem("token");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   async function fetchData() {
     try {
       const result = await axios({
@@ -32,6 +33,7 @@ const Cheklist = () => {
     });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleTambah = (e) => {
     e.preventDefault();
     axios({
@@ -52,6 +54,23 @@ const Cheklist = () => {
       });
   };
 
+  // deletelist
+  const deletelist = (id) => {
+    axios({
+      method: "DELETE",
+      url: `http://94.74.86.174:8080/api/checklist/${id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((result) => {
+        alert("data list dihapus");
+      })
+      .catch((error) => {
+        alert("data gagal dihapus");
+      });
+  };
+
   useEffect(() => {
     fetchData();
   }, [fetchData, handleTambah]);
@@ -69,7 +88,11 @@ const Cheklist = () => {
         <h4>Data list</h4>
         <div>
           {getAllList?.map((item) => (
-            <div>{item.name}</div>
+            <div key={item.id} id={item.id}>
+              {item.name}
+              <button onClick={() => deletelist(item.id)}>Delete</button>
+              <button>Edit</button>
+            </div>
           ))}
         </div>
       </div>
