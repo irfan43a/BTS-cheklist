@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const CheklistItem = () => {
   const { id } = useParams();
@@ -56,6 +56,23 @@ const CheklistItem = () => {
       });
   };
 
+  // deletelist
+  const deletelist = (idItem) => {
+    axios({
+      method: "DELETE",
+      url: `http://94.74.86.174:8080/api/checklist/${id}/item/${idItem}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((result) => {
+        alert("data list dihapus");
+      })
+      .catch((error) => {
+        alert("data gagal dihapus");
+      });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -73,9 +90,9 @@ const CheklistItem = () => {
         <div>
           {getAllItemList?.map((item) => (
             <div key={item.id} id={item.id}>
-              {item.name}
-              {/* <button onClick={() => deletelist(item.id)}>Delete</button>
-              <button>Edit</button> */}
+              <Link to={`/cheklisitem/${item.id}`}>{item.name}</Link>
+              <button onClick={() => deletelist(item.id)}>Delete</button>
+              <button>Edit</button>
             </div>
           ))}
         </div>
