@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Cheklist = () => {
   // getlist
@@ -73,7 +74,7 @@ const Cheklist = () => {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData, handleTambah]);
+  }, []);
   console.log("darigetall", getAllList);
   return (
     <div>
@@ -89,7 +90,7 @@ const Cheklist = () => {
         <div>
           {getAllList?.map((item) => (
             <div key={item.id} id={item.id}>
-              {item.name}
+              <Link to={`/cheklisitem/${item.id}`}>{item.name}</Link>
               <button onClick={() => deletelist(item.id)}>Delete</button>
               <button>Edit</button>
             </div>
