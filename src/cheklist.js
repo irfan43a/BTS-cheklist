@@ -21,19 +21,48 @@ const Cheklist = () => {
       console.log(err);
     }
   }
+  // create list
+  const [createList, setCreateList] = useState({
+    name: "",
+  });
+  const handleChange = (e) => {
+    setCreateList({
+      ...createList,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleTambah = (e) => {
+    e.preventDefault();
+    axios({
+      method: "POST",
+      url: `http://94.74.86.174:8080/api/checklist`,
+      data: createList,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        alert("berhasil tambah list");
+        console.log(res);
+      })
+      .catch((e) => {
+        alert(e.response.data.message);
+        alert("gagal tambah data");
+      });
+  };
+
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData, handleTambah]);
   console.log("darigetall", getAllList);
   return (
     <div>
       <div>
         <h1>cheklist</h1>
         <div>
-          <label>
-            <input type="text" />
-            <button>tambah</button>
-          </label>
+          <input type="text" name="name" onChange={handleChange} />
+          <button onClick={handleTambah}>tambah</button>
         </div>
       </div>
       <div>
