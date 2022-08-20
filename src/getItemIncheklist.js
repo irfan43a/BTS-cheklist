@@ -40,19 +40,19 @@ const GetItemIncheklist = () => {
     e.preventDefault();
     axios({
       method: "PUT",
-      url: `http://94.74.86.174:8080/api/checklist/${id}/item/rename/${id}`,
+      url: `http://94.74.86.174:8080/api/checklist/${id}/item/rename/${iditem}`,
       data: createList,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
-        alert("berhasil tambah list");
+        alert("berhasil rename list");
         console.log(res);
       })
       .catch((e) => {
         alert(e.response.data.message);
-        alert("gagal tambah data");
+        alert("gagal rename data");
       });
   };
 
