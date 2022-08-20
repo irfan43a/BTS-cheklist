@@ -73,6 +73,25 @@ const CheklistItem = () => {
       });
   };
 
+  //   update
+  const handleUpdate = (idItem) => {
+    axios({
+      method: "PUT",
+      url: `http://94.74.86.174:8080/api/checklist/${id}/item/${idItem}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        alert("berhasil Update");
+        console.log(res);
+      })
+      .catch((e) => {
+        alert(e.response.data.message);
+        alert("gagal Update");
+      });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -91,8 +110,9 @@ const CheklistItem = () => {
           {getAllItemList?.map((item) => (
             <div key={item.id} id={item.id}>
               <Link to={`/cheklisitem/${id}/itembyid/${item.id}`}>{item.name}</Link>
+              <p>{item.itemCompletionStatus === true ? <p>Status True</p> : <p>Status False</p>}</p>
               <button onClick={() => deletelist(item.id)}>Delete</button>
-              <button>Edit</button>
+              <button onClick={() => handleUpdate(item.id)}>Update</button>
             </div>
           ))}
         </div>

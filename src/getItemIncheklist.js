@@ -90,7 +90,6 @@ const GetItemIncheklist = () => {
 
         <div>
           {getAllItemList?.name}
-          <button>update</button>
           <button onClick={() => deletelist(getAllItemList.id)}>delete</button>
         </div>
       </div>
