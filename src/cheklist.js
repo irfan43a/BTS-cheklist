@@ -15,8 +15,8 @@ const Cheklist = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(result.data);
-      // setGetAllList(result)
+      //   console.log("data ckelist", result.data.data);
+      setGetAllList(result.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -24,6 +24,7 @@ const Cheklist = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  console.log("darigetall", getAllList);
   return (
     <div>
       <div>
@@ -39,10 +40,7 @@ const Cheklist = () => {
         <h4>Data list</h4>
         <div>
           {getAllList?.map((item) => (
-            <div>
-              name:{item.name}
-              items:{item.items}
-            </div>
+            <div>{item.name}</div>
           ))}
         </div>
       </div>

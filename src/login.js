@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   // login
   const [form, setform] = useState({
     username: "",
@@ -23,6 +25,7 @@ const Login = () => {
         console.log(token);
         // localStorage.setItem("token", token);
         alert("login succes");
+        navigate("/checklist");
       })
       .catch((e) => {
         alert("gagal login");
